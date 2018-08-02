@@ -42,6 +42,7 @@ public class Page<Key extends Comparable<Key>> {
 	 * @param key
 	 */
 	public void insert(Key key){
+		
 		if(is_external)
 			ts.put(key, key);
 		else
@@ -117,8 +118,8 @@ public class Page<Key extends Comparable<Key>> {
 		Page<Key> new_page = new Page<>(is_external, m);
 		while(getTs().size()>(m/2)){
 			Key key = (Key) getTs().max();
-			new_page.getTs().put(key,ts.get(key));
-			ts.deleteMax();
+			new_page.getTs().put(key,getTs().get(key));
+			getTs().deleteMax();
 		}
 		return new_page;
 		
@@ -128,6 +129,33 @@ public class Page<Key extends Comparable<Key>> {
 	public Iterable<Key> keys(){
 		return getTs().keys();
 	}
+	public void print(){
+		for (Object object : getTs().keys()){
+			   System.out.println((Key) object);
+		   }
+	}
+	public int rank(Key k){
+			//System.out.println("----");
+			//print();
+		   if(isExternal()){
+			   //return getTs().s
+			   return getTs().size(getTs().min(),k);
+			}else{
+			   int res = 0;
+			   for (Object object : getTs().keys(getTs().min(),k)){
+				   Key key = (Key) object;
+				   if(!key.equals(k)){
+					   Page p =(Page)getTs().get((Key) object);
+					   res += p.rank(k);
+				   }else{
+					   res ++;
+					   break;
+				   }
+			   }
+			   return res;
+		   }   
+	   }
+	/*
 	public static void main(String[] args) {
 		Page<String> p = new Page<>(true,4);
 		p.insert("A");
@@ -140,6 +168,7 @@ public class Page<Key extends Comparable<Key>> {
 		}
 		p.close();
 	}
+	*/
 	
 	
 	
