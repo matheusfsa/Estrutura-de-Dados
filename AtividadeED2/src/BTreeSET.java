@@ -30,7 +30,7 @@ public class BTreeSET<Key extends Comparable<Key>> {
          root = new Page(false,m);
          root.enter(lefthalf);
          root.enter(righthalf);
-         externas+=2;
+         externas++;
       }
    }
 
@@ -43,7 +43,7 @@ public class BTreeSET<Key extends Comparable<Key>> {
       add(next, key);
       if (next.hasOverflowed()){
          h.enter(next.split());
-         externas+=1;
+         externas++;
       }
       next.close();
    }
@@ -117,7 +117,7 @@ public class BTreeSET<Key extends Comparable<Key>> {
 	   return (Key)aux.getTs().select(k);
    }
    public int rank(Key key){
-	   return root.rank(key)-2;
+	   return root.rank(key)-1;
    }
    public void print(){
 	   System.out.println("Tamanho:" + root.getTs().size());
@@ -130,7 +130,7 @@ public class BTreeSET<Key extends Comparable<Key>> {
 	}
    }
    public int size(Key lo, Key hi){
-	   return (rank(hi) - rank(lo))+1; 
+	   return (rank(hi) - rank(lo))+2; 
    }
    public Key get(Key k){
 	   Page aux = root;
@@ -142,5 +142,24 @@ public class BTreeSET<Key extends Comparable<Key>> {
 	   }else{
 		   return null;
 	   }
+   }
+
+	public void setRoot(Page root) {
+		this.root = root;
+	}
+   public static void main(String[] args) {
+	   Page<Integer> p = new Page<>(false, 6);
+	   Page<Integer> filho1 = new Page<>(true, 6);
+	   filho1.insert(-1);
+	   filho1.insert(2);
+	   Page<Integer> filho2 = new Page<>(true, 6);
+	   filho2.insert(3);
+	   filho2.insert(4);
+	   p.enter(filho1);
+	   p.enter(filho2);
+	   BTreeSET<Integer> b = new BTreeSET<Integer>(-1, 6);
+	   b.setRoot(p);
+	   b.add(1);
+	   b.print();
    }
 }

@@ -14,24 +14,27 @@ public class Exec2item1 {
 		bts.add('b');
 		bts.add('c');
 		bts.add('d');
+		bts.add('k');
+		bts.add('l');
+		bts.add('m');
 		bts.add('e');
 		bts.add('f');
 		bts.add('g');
 		bts.add('h');
 		bts.add('i');
 		bts.add('j');
-		bts.add('k');
-		bts.add('l');
-		bts.add('m');
 		bts.add('n');
 		bts.add('o');
 		bts.add('p');
-		//bts.print();
-		System.out.println(bts.rank('e'));
+		bts.print();
+		System.out.println(bts.contains('e'));
+		System.out.println(bts.floor('e'));
+		System.out.println(bts.ceiling('e'));
 		System.out.println(bts.rank('e'));
 		System.out.println(bts.rank('c'));
 		System.out.println(bts.size('c', 'e'));
 		System.out.println(bts.get('x'));
+		System.out.println(bts.get('o'));
 	}
 
 }

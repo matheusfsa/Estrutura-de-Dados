@@ -7,8 +7,7 @@ import edu.princeton.cs.algs4.SET;
  *Repita o exercício supondo que as páginas são arquivos na teia WWW.
  */
 public class Page<Key extends Comparable<Key>> {
-	private BinarySearchST<Key, Page> ts_aux;
-	private BinarySearchST<Key, Key> ts;
+	private BinarySearchST ts;
 	private boolean is_external;
 	private int menor_valor;
 	private int m;
@@ -20,9 +19,9 @@ public class Page<Key extends Comparable<Key>> {
 		this.is_external = is_external;
 		this.m = m;
 		if(this.is_external)
-			this.ts = new BinarySearchST<>();
+			this.ts = new BinarySearchST<Key, Page>();
 		else
-			this.ts_aux = new BinarySearchST<>();
+			this.ts = new BinarySearchST<Key, Key>();
 	}
 	
 	/**
@@ -67,7 +66,7 @@ public class Page<Key extends Comparable<Key>> {
 		if(is_external)
 			System.err.println("Esta página não é interna");
 		else
-			ts_aux.put((Key) p.getTs().min(), p);
+			ts.put((Key) p.getTs().min(), p);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -75,7 +74,7 @@ public class Page<Key extends Comparable<Key>> {
 		if(is_external)
 			return ts;
 		else
-			return ts_aux;
+			return ts;
 	}
 	
 	/**
@@ -98,7 +97,7 @@ public class Page<Key extends Comparable<Key>> {
 		if(is_external)
 			return null;
 		else
-			return ts_aux.get(ts_aux.floor(key));
+			return (Page<Key>) ts.get(ts.floor(key));
 		
 	}
 	/**
@@ -139,7 +138,7 @@ public class Page<Key extends Comparable<Key>> {
 			//print();
 		   if(isExternal()){
 			   //return getTs().s
-			   return getTs().size(getTs().min(),k);
+			   return getTs().rank(k);
 			}else{
 			   int res = 0;
 			   for (Object object : getTs().keys(getTs().min(),k)){
